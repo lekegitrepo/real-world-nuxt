@@ -7,7 +7,7 @@
 export default {
   head() {
     return {
-      title: 'Create- Real World Events',
+      title: 'Create- ',
       meta: [
         {
           hid: 'description',
