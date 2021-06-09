@@ -11,7 +11,8 @@
 </template>
 <script>
 import EventCard from '@/components/EventCard.vue'
-import EventService from '@/services/EventService'
+import { mapState } from 'vuex'
+
 export default {
   components: { EventCard },
   head() {
@@ -19,18 +20,18 @@ export default {
       title: 'Event Listing'
     }
   },
-  async asyncData({ error }) {
+  async fetch({ store, error }) {
     try {
-      const { data } = await EventService.getEvents()
-      return {
-        events: data
-      }
+      await store.dispatch('events/fetchEvents')
     } catch (e) {
       error({
         statusCode: 503,
         message: 'Unable to fetch events at this time. Please try again!'
       })
     }
-  }
+  },
+  computed: mapState({
+    events: state => state.events.events
+  })
 }
 </script>
